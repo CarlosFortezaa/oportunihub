@@ -86,6 +86,14 @@ Each opportunity includes the following information:
   Form used by authorized users to create new opportunities.
 <img width="2511" height="1263" alt="create opportunity form screenshot" src="https://github.com/user-attachments/assets/aab3fea2-de46-4a48-8145-73f86d547250" />
 
+### Email List
+Form used to manage email subscriptions for users who want to receive notifications when new opportunities are posted.
+<img width="2500" height="1278" alt="image" src="https://github.com/user-attachments/assets/703b5e72-28f3-4604-a50b-297cdb0e2ae3" />
+
+
+## Profile View
+  Main view if your profile.
+<img width="2499" height="1270" alt="image" src="https://github.com/user-attachments/assets/6cc08ae5-d985-410c-8db6-680916858b33" />
 
 
 
