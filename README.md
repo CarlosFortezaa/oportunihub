@@ -96,7 +96,7 @@ Form used to manage email subscriptions for users who want to receive notificati
 <img width="2500" height="1278" alt="image" src="https://github.com/user-attachments/assets/703b5e72-28f3-4604-a50b-297cdb0e2ae3" />
 
 
-## Profile View
+### Profile View
   Main view of the user profile where users can update their email and password.
 <img width="2499" height="1270" alt="image" src="https://github.com/user-attachments/assets/6cc08ae5-d985-410c-8db6-680916858b33" />
 
