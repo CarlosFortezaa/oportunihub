@@ -58,4 +58,13 @@ Each opportunity includes the following information:
 - CSS
 
 ##
+<img width="2492" height="1267" alt="image" src="https://github.com/user-attachments/assets/c264703e-a8b5-4591-8bdd-473601a4d903" />
+<img width="2503" height="1262" alt="image" src="https://github.com/user-attachments/assets/01c74a30-8eda-417b-be72-1ae042a4d4b4" />
+<img width="2503" height="1267" alt="image" src="https://github.com/user-attachments/assets/c0a79366-2bd0-4003-adef-a3caa995508d" />
+<img width="2502" height="1273" alt="image" src="https://github.com/user-attachments/assets/9cd45772-d4ee-4ff8-b919-297d28d8b236" />
+<img width="2496" height="1269" alt="image" src="https://github.com/user-attachments/assets/d1d89f34-7cbb-44ab-8b20-b239dfb8aafd" />
+
+
+
+
 
