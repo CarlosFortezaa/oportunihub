@@ -4,6 +4,27 @@ POR EL MOMENTO SE VA A PONER ASI: "/index.php?action=index" EL ACTION UNO LO DEF
 POR EJEMPLO COMO AQUI: <form action="index.php?action=create_opportunity" method="post" enctype="multipart/form-data"> <!-- enctype es para poder subir archivos --> */
 session_start();
 
+/* LOAD ENV FIRST */
+$envPath = __DIR__ . '/../.env';
+
+if (file_exists($envPath)) {
+    $lines = file($envPath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+
+    foreach ($lines as $line) {
+        if (strpos($line, '=') === false)
+            continue;
+
+        list($key, $value) = explode('=', $line, 2);
+
+        $key = trim($key);
+        $value = trim($value);
+
+        putenv("$key=$value");
+        $_ENV[$key] = $value;
+        $_SERVER[$key] = $value;
+    }
+}
+
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -222,11 +243,11 @@ switch ($action) {
         break;
 
 
-        //====================================================================== \\
-        //                          DELETE_USER                                   \\
-        //====================================================================== \\
-        //primero se verifica que el usuario sea admin para que pueda borrar usuarios
-        //(medio redundante?)
+    //====================================================================== \\
+    //                          DELETE_USER                                   \\
+    //====================================================================== \\
+    //primero se verifica que el usuario sea admin para que pueda borrar usuarios
+    //(medio redundante?)
     case 'delete_user':
         if (empty($_SESSION['user']) || $_SESSION['user']['role'] !== 'admin') {
             header("Location: index.php?action=opportunities_list");
@@ -244,12 +265,12 @@ switch ($action) {
         exit;
 
 
-        //====================================================================== \\
-        //                          CREATE_OPPORTUNITY                           \\
-        //====================================================================== \\
+    //====================================================================== \\
+    //                          CREATE_OPPORTUNITY                           \\
+    //====================================================================== \\
 
     case 'create_opportunity':
-            if(empty($_SESSION['user'])) {
+        if (empty($_SESSION['user'])) {
             header("Location: index.php?action=opportunities_list");
             exit;
         }
@@ -296,62 +317,62 @@ switch ($action) {
                 OpportunityDB::create_opportunity($opp_created);
                 $_SESSION['success'] = "Oportunidad '$title' creada exitosamente.";
 
-                // $emails = Subscription::allEmails();
-                // $unsubLink = "http://localhost/CCOM4019/Project/CCOM_4019_OportuniHub/public/index.php?action=unsubscribe_email&email=";
-                // $descriptionTags = add_tags($description);
+                $emails = Subscription::allEmails();
+                $unsubLink = "http://localhost/Coding/OportuniHub/public/index.php?action=unsubscribe_email&email=";
+                $descriptionTags = add_tags($description);
 
-                // foreach ($emails as $email) {
-                //     $mail = new PHPMailer(true);
-                //     try {
-                //         // Server settings
-                //         $mail->isSMTP();
-                //         $mail->Host       = 'smtp.gmail.com';
-                //         $mail->SMTPAuth   = true;
-                //         $mail->Username   = 'oportunihub@gmail.com';
-                //         $mail->Password   = 'lrjcepxfzojykdwx';
-                //         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-                //         $mail->Port       = 587;
+                foreach ($emails as $email) {
+                    $mail = new PHPMailer(true);
+                    try {
+                        // Server settings
+                        $mail->isSMTP();
+                        $mail->Host = getenv('MAILER_HOST');
+                        $mail->SMTPAuth = true;
+                        $mail->Username = getenv('MAILER_USERNAME');
+                        $mail->Password = getenv('MAILER_PASSWORD');
+                        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+                        $mail->Port = getenv('MAILER_PORT');
 
-                //         // Recipients
-                //         $mail->setFrom('oportunihub@gmail.com', 'OportuniHub');
-                //         $mail->addAddress($email);
+                        // Recipients
+                        $mail->setFrom('oportunihub@gmail.com', 'OportuniHub');
+                        $mail->addAddress($email);
 
-                //         // Content y tuve que poner el css en cada misma linea pq gmail y lo demas me los ignora si hago una clase desde .css 
-                //         $mail->isHTML(true);
-                //         $mail->CharSet = 'UTF-8';
-                //         $mail->Subject = "Nueva Oportunidad: $title";
-                //         $mail->Body = "
-                //         <html>
-                //         <head>
-                //             <meta charset='UTF-8'>
-                //         </head>
-                //         <body>
-                //             <h1>Nueva Oportunidad Disponible</h1>
-                //             <h2 style='font-weight: normal;'><strong>Título:</strong> $title</h2>
-                //             <p style='font-weight: normal;'><strong>Descripción:</strong>$descriptionTags</p>
-                //             <h4 style='font-weight: normal;'><strong>Patrocinador:</strong> $sponsor</h4>
-                //         ";
-                //         if($url !== '' && $url !== NULL){
-                //             $mail->Body .= "<h4 style='font-weight: normal;'><strong>Link:</strong> $url</h4>";
-                //         }
+                        // Content y tuve que poner el css en cada misma linea pq gmail y lo demas me los ignora si hago una clase desde .css 
+                        $mail->isHTML(true);
+                        $mail->CharSet = 'UTF-8';
+                        $mail->Subject = "Nueva Oportunidad: $title";
+                        $mail->Body = "
+                         <html>
+                         <head>
+                             <meta charset='UTF-8'>
+                       </head>
+                        <body>
+                             <h1>Nueva Oportunidad Disponible</h1>
+                             <h2 style='font-weight: normal;'><strong>Título:</strong> $title</h2>
+                             <p style='font-weight: normal;'><strong>Descripción:</strong>$descriptionTags</p>
+                             <h4 style='font-weight: normal;'><strong>Patrocinador:</strong> $sponsor</h4>
+                         ";
+                        if ($url !== '' && $url !== NULL) {
+                            $mail->Body .= "<h4 style='font-weight: normal;'><strong>Link:</strong> $url</h4>";
+                        }
 
-                //         $mail->Body .= "<h4 style='font-weight: normal;'><strong>Fecha de Publicación:</strong> $date_posted</h4>";
+                        $mail->Body .= "<h4 style='font-weight: normal;'><strong>Fecha de Publicación:</strong> $date_posted</h4>";
 
-                //         if($deadline !== '' && $deadline !== NULL){
-                //             $mail->Body .= "<h4 style='font-weight: normal;'><strong>Fecha de Vencimiento:</strong> $deadline</h4>";
-                //         }
-                        
-                //         $mail->Body .= "<h4 style='font-weight: normal;'><strong>Tipo: </strong> $type </h4>
-                //                         <h4 style='font-weight: normal;'><strong>Publicado por:</strong> $posted_by</h4>
-                //                         <p style='font-weight: normal;'>Si ya no deseas recibir estas oportunidades, puedes <a href='{$unsubLink}" . urlencode($email) . "' style='color: #1a73e8; text-decoration: none;'>darte de baja aquí</a>.</p>
-                //                     </body>
-                //                     </html>";  
+                        if ($deadline !== '' && $deadline !== NULL) {
+                            $mail->Body .= "<h4 style='font-weight: normal;'><strong>Fecha de Vencimiento:</strong> $deadline</h4>";
+                        }
 
-                //         $mail->send();
-                //     } catch (Exception $e) {
-                //         error_log("El correo a $email no se pudo enviar. Mailer Error: {$mail->ErrorInfo}");
-                //     }
-                // }
+                        $mail->Body .= "<h4 style='font-weight: normal;'><strong>Tipo: </strong> $type </h4>
+                                         <h4 style='font-weight: normal;'><strong>Publicado por:</strong> $posted_by</h4>
+                                         <p style='font-weight: normal;'>Si ya no deseas recibir estas oportunidades, puedes <a href='{$unsubLink}" . urlencode($email) . "' style='color: #1a73e8; text-decoration: none;'>darte de baja aquí</a>.</p>
+                                     </body>
+                                     </html>";
+
+                        $mail->send();
+                    } catch (Exception $e) {
+                        error_log("El correo a $email no se pudo enviar. Mailer Error: {$mail->ErrorInfo}");
+                    }
+                }
 
                 header("Location: index.php?action=opportunities_list");
                 exit;
@@ -458,7 +479,7 @@ switch ($action) {
     //                          SUBSCRIBE_EMAIL                              \\
     //====================================================================== \\
     case 'subscribe_email':
-        $emails  = [];
+        $emails = [];
         $errores = [];
         $message = null;
 
@@ -467,13 +488,13 @@ switch ($action) {
 
             if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 $errores[] = 'Correo inválido.';
-            } else if(!Subscription::subscribe($email)) {
+            } else if (!Subscription::subscribe($email)) {
                 $errores[] = 'El correo ya está registrado.';
             } else {
                 $_SESSION['success'] = "Correo '$email' suscrito exitosamente.";
                 header("Location: index.php?action=subscriptions_list");
                 exit;
-            } 
+            }
         }
 
         // Siempre cargar todos los emails, aunque haya errores
@@ -496,7 +517,7 @@ switch ($action) {
         if ($email && filter_var($email, FILTER_VALIDATE_EMAIL)) {
             Subscription::unsubscribe($email);
             $_SESSION['success'] = "Correo '$email' dado de baja exitosamente.";
-            
+
             // Si viene por GET (desde link en email), podemos mostrar un mensaje simple
             if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 include APP_ROOT . '/views/subscriptions/unsub_success.php';
