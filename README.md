@@ -92,7 +92,7 @@ Form used to manage email subscriptions for users who want to receive notificati
 
 
 ## Profile View
-  Main view if your profile.
+  Main view of your profile.
 <img width="2499" height="1270" alt="image" src="https://github.com/user-attachments/assets/6cc08ae5-d985-410c-8db6-680916858b33" />
 
 
