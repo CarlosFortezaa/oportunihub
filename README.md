@@ -70,7 +70,11 @@ Each opportunity includes the following information:
 ### Opportunities List
   Main view of the system displaying all available opportunities. Includes search functionality.
 <img width="2502" height="1273" alt="image" src="https://github.com/user-attachments/assets/9cd45772-d4ee-4ff8-b919-297d28d8b236" />(visitor view)
+
+
 <img width="2492" height="1274" alt="image" src="https://github.com/user-attachments/assets/116b96dd-3645-4736-a626-b7f3de6c389b" />(contrubutor view)
+
+
 <img width="2496" height="1269" alt="image" src="https://github.com/user-attachments/assets/d1d89f34-7cbb-44ab-8b20-b239dfb8aafd" />(admin view)
 
 ### Create Opportunity
