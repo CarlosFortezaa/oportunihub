@@ -67,7 +67,7 @@ Each opportunity includes the following information:
 
 ### Admin - Create User Page
   Page where admins can create new user accounts and assign roles.
-<img width="2503" height="1262" alt="create user screenshot" src="https://github.com/user-attachments/assets/01c74a30-8eda-417b-be72-1ae042a4d4b4" />
+<img width="2506" height="1264" alt="image" src="https://github.com/user-attachments/assets/8593c3e2-d537-48b3-8997-faacd380ffda" />
 
 
 ### Admin - Manage Users Page
