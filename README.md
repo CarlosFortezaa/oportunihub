@@ -58,4 +58,4 @@ Each opportunity includes the following information:
 - CSS
 
 ##
-<img width="2504" height="1264" alt="image" src="https://github.com/user-attachments/assets/8609c9e8-ca8b-4c3b-837e-76450f2bb469" />
+
