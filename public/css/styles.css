@@ -24,6 +24,19 @@ ul li form{
     margin: 0;
 }
 
+.login_form_div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 73vh;
+}
+
+.login_form{
+    width: 100%;
+    max-width: 400px;
+    padding: 10rem;
+}
+
 /* NAVBAR */
 header {
     display: flex;

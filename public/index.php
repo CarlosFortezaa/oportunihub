@@ -318,7 +318,7 @@ switch ($action) {
                 $_SESSION['success'] = "Oportunidad '$title' creada exitosamente.";
 
                 $emails = Subscription::allEmails();
-                $unsubLink = "http://localhost/Coding/OportuniHub/public/index.php?action=unsubscribe_email&email=";
+                $unsubLink = "http://localhost/Coding/oportuniHub/public/index.php?action=unsubscribe_email&email=";
                 $descriptionTags = add_tags($description);
 
                 foreach ($emails as $email) {
@@ -370,7 +370,7 @@ switch ($action) {
 
                         $mail->send();
                     } catch (Exception $e) {
-                        error_log("El correo a $email no se pudo enviar. Mailer Error: {$mail->ErrorInfo}");
+                        die("El correo a $email no se pudo enviar. Mailer Error: {$mail->ErrorInfo}");
                     }
                 }
 
