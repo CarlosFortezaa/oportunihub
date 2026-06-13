@@ -72,6 +72,7 @@ Each opportunity includes the following information:
 
 ### Opportunities List
   Main view of the system displaying all available opportunities. Includes search functionality.
+  
 (Visitor View)
 <img width="2502" height="1273" alt="opportunities list from visitor view screenshot" src="https://github.com/user-attachments/assets/9cd45772-d4ee-4ff8-b919-297d28d8b236" />
 
