@@ -63,11 +63,11 @@ Each opportunity includes the following information:
 <img width="2492" height="1267" alt="login page screenshot" src="https://github.com/user-attachments/assets/c264703e-a8b5-4591-8bdd-473601a4d903" />
 
 ### Admin - Create User Page
-  Page where the admins can create new user accounts and assign roles.
+  Page where admins can create new user accounts and assign roles.
 <img width="2503" height="1262" alt="create user screenshot" src="https://github.com/user-attachments/assets/01c74a30-8eda-417b-be72-1ae042a4d4b4" />
 
 ### Admin - Manage Users Page
-  Page where the admins can view, edit, or delete existing user accounts
+  Page where admins can view, edit, or delete existing user accounts
 <img width="2503" height="1267" alt="administrate users screenshot" src="https://github.com/user-attachments/assets/c0a79366-2bd0-4003-adef-a3caa995508d" />
 
 ### Opportunities List
