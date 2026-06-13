@@ -57,6 +57,8 @@ Each opportunity includes the following information:
 - HTML
 - CSS
 
+---
+
 ## Screenshots
 ### Login Page
   Authentication system where users sign in with their account credentials.
