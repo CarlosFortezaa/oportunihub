@@ -1,9 +1,15 @@
 /* GENERAL */
+html, body {
+    height: 100%;
+}
+
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     background: #f6f6f6;
     color: #333;
+    display: flex;
+    flex-direction: column;
 }
 
 h1, h2, h3 {
@@ -16,6 +22,7 @@ main {
     width: 90%;
     max-width: 1100px;
     margin: 30px auto;
+    flex: 1;
 }
 
 ul li form{
@@ -28,7 +35,7 @@ ul li form{
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 73vh;
+    min-height: 60vh;
 }
 
 .login_form{
@@ -356,6 +363,8 @@ tr:hover {
 
 /**** FOOTER ****/
 footer {
+    display: block;
+    justify-content: bottom;
     text-align: center;
     padding: 15px;
     font-size: 13px;

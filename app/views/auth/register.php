@@ -19,7 +19,7 @@
 <form method="post" action="<?= BASE_URL ?>/index.php?action=register">
 
     <label for="user_id">User ID:</label>
-    <input type="text" id="user_id" name="user_id" placeholder="ej: juan23"
+    <input type="text" id="user_id" name="user_id" placeholder="ej: juan.delpueblo"
     value="<?= htmlspecialchars($_POST['user_id'] ?? '') ?>">
 
     <br><br>
