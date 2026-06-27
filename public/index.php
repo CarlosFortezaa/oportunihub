@@ -265,9 +265,9 @@ switch ($action) {
         exit;
 
 
-    //====================================================================== \\
-    //                          CREATE_OPPORTUNITY                           \\
-    //====================================================================== \\
+        //====================================================================== \\
+        //                          CREATE_OPPORTUNITY                           \\
+        //====================================================================== \\
 
     case 'create_opportunity':
         if (empty($_SESSION['user'])) {
@@ -389,57 +389,62 @@ switch ($action) {
         $errores = [];
         $opp_id = $_GET['opp_id'] ?? NULL;
         $opportunity = OpportunityDB::findOpportunityById($opp_id);
+        $opp = OpportunityDB::findOpportunityById($opp_id);
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $opp_id = $_POST['opp_id'] ?? '';
-            $title = $_POST['title'] ?? '';
-            $description = $_POST['description'] ?? '';
-            $sponsor = $_POST['sponsor'] ?? '';
-            $url = $_POST['url'] ?? NULL;
-            $deadline = !empty($_POST['deadline']) ? $_POST['deadline'] : NULL; // aqui se usa !empty ya que aunque el usuario no envie nada, el "default value" es mm/dd/yyyy. entonces al intentar crear la oportunidad se enviaba un string vacio("") PERO con el !empty, un string vacio se convierte en NULL y NULL si es aceptado por la db, los strings vacios no
-            $date_posted = date('Y-m-d H:i:s');
-            $type = $_POST['type'] ?? 'Other';
-            $attachment_path = $opportunity->getAttachmentPath(); // para mantener el mismo file por si no suben uno nuevo
+        if ($_SESSION['user']['id'] === $opp->getPostedBy() || $_SESSION['user']['role'] === 'admin') {
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                $opp_id = $_POST['opp_id'] ?? '';
+                $title = $_POST['title'] ?? '';
+                $description = $_POST['description'] ?? '';
+                $sponsor = $_POST['sponsor'] ?? '';
+                $url = $_POST['url'] ?? NULL;
+                $deadline = !empty($_POST['deadline']) ? $_POST['deadline'] : NULL; // aqui se usa !empty ya que aunque el usuario no envie nada, el "default value" es mm/dd/yyyy. entonces al intentar crear la oportunidad se enviaba un string vacio("") PERO con el !empty, un string vacio se convierte en NULL y NULL si es aceptado por la db, los strings vacios no
+                $date_posted = date('Y-m-d H:i:s');
+                $type = $_POST['type'] ?? 'Other';
+                $attachment_path = $opportunity->getAttachmentPath(); // para mantener el mismo file por si no suben uno nuevo
 
 
-            // Subir el archivo
-            if (isset($_FILES['attachment']) && $_FILES['attachment']['error'] === UPLOAD_ERR_OK) {
-                $tmp_name = $_FILES['attachment']['tmp_name']; // guarda el file en una carpeta temporal del servidor
-                $fileName = $_FILES['attachment']['name']; // nombre del file ej. document.pdf 
-                $destPath = UPLOAD_DIR . DIRECTORY_SEPARATOR . $fileName;  // la ruta completa en donde el file se va a guardar
+                // Subir el archivo
+                if (isset($_FILES['attachment']) && $_FILES['attachment']['error'] === UPLOAD_ERR_OK) {
+                    $tmp_name = $_FILES['attachment']['tmp_name']; // guarda el file en una carpeta temporal del servidor
+                    $fileName = $_FILES['attachment']['name']; // nombre del file ej. document.pdf 
+                    $destPath = UPLOAD_DIR . DIRECTORY_SEPARATOR . $fileName;  // la ruta completa en donde el file se va a guardar
 
-                if (move_uploaded_file($tmp_name, $destPath)) {
-                    $attachment_path = 'uploads/' . $fileName;
+                    if (move_uploaded_file($tmp_name, $destPath)) {
+                        $attachment_path = 'uploads/' . $fileName;
+                    }
+                }
+
+                if (empty($title)) {
+                    $errores[] .= "El titulo es obligatorio.";
+                }
+                if (empty($description)) {
+                    $errores[] .= "La descripcion es obligatoria.";
+                }
+                if (empty($sponsor)) {
+                    $errores[] .= "El patrocinador es obligatorio.";
+                }
+                if ($deadline !== NULL && $date_posted > $deadline) {
+                    $errores[] .= 'La fecha publicada no puede ser posterior o igual a la fecha limite.';
+                }
+
+                if (empty($errores)) {
+                    $opportunity->setTitle($title);
+                    $opportunity->setDescription($description);
+                    $opportunity->setSponsor($sponsor);
+                    $opportunity->setType($type);
+                    $opportunity->setUrl($url);
+                    $opportunity->setAttachmentPath($attachment_path);
+                    $opportunity->setDeadline($deadline);
+
+                    OpportunityDB::edit_opportunity($opportunity);
+                    $_SESSION['success'] = "Oportunidad '$title' editada exitosamente.";
+                    header("Location: index.php?action=opportunities_list");
+                    exit;
                 }
             }
-
-            if (empty($title)) {
-                $errores[] .= "El titulo es obligatorio.";
-            }
-            if (empty($description)) {
-                $errores[] .= "La descripcion es obligatoria.";
-            }
-            if (empty($sponsor)) {
-                $errores[] .= "El patrocinador es obligatorio.";
-            }
-            if ($deadline !== NULL && $date_posted > $deadline) {
-                $errores[] .= 'La fecha publicada no puede ser posterior o igual a la fecha limite.';
-            }
-
-            if (empty($errores)) {
-                $opportunity->setTitle($title);
-                $opportunity->setDescription($description);
-                $opportunity->setSponsor($sponsor);
-                $opportunity->setType($type);
-                $opportunity->setUrl($url);
-                $opportunity->setAttachmentPath($attachment_path);
-                $opportunity->setDeadline($deadline);
-
-                OpportunityDB::edit_opportunity($opportunity);
-                $_SESSION['success'] = "Oportunidad '$title' editada exitosamente.";
-                header("Location: index.php?action=opportunities_list");
-                exit;
-            }
+        } else {
+            header("Location: index.php?action=opportunities_list");
         }
         include APP_ROOT . '/views/opportunities/edit_opportunity_form.php';
         break;
@@ -547,10 +552,10 @@ switch ($action) {
             if ($opp->getAttachmentPath()) {
                 unlink($opp->getAttachmentPath()); // para borrar el attachment de la db
             }
+            $_SESSION['success'] = "Oportunidad '$opp_title' eliminada exitosamente.";
+        } else {
+            header("Location: index.php?action=opportunities_list");
         }
-        $_SESSION['success'] = "Oportunidad '$opp_title' eliminada exitosamente.";
-        header("Location: index.php?action=opportunities_list");
-        exit;
         break;
 
 
