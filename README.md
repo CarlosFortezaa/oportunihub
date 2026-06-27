@@ -44,9 +44,11 @@ Each opportunity includes the following information:
 - **External Link** – Optional URL reference  
 - **File Attachment** – Optional uploaded document  
 - **Publication Date** – Automatically generated when created  
-- **Deadline** – Selected by the creator  
-- **Type** – Category (job, internship, research, etc.)  
-- **Posted By** – Automatically assigned based on the logged-in user session  
+- **Deadline** – Selected by the creator
+- **Posted By** – Automatically assigned based on the logged-in user session 
+- **Type** – Category (job, internship, research, etc.)
+
+ 
 
 ---
 
@@ -65,14 +67,16 @@ Each opportunity includes the following information:
 <img width="2492" height="1267" alt="login page screenshot" src="https://github.com/user-attachments/assets/c264703e-a8b5-4591-8bdd-473601a4d903" />
 
 
-### Admin - Create User Page
-  Page where admins can create new user accounts and assign roles.
-<img width="2506" height="1264" alt="image" src="https://github.com/user-attachments/assets/8593c3e2-d537-48b3-8997-faacd380ffda" />
-
 
 ### Admin - Manage Users Page
   Page where admins can view, edit, or delete existing user accounts
 <img width="2503" height="1267" alt="administrate users screenshot" src="https://github.com/user-attachments/assets/c0a79366-2bd0-4003-adef-a3caa995508d" />
+
+### Admin - Create/Edit User Page
+  Page where admins can create new user accounts and assign roles or edit existing users.
+<img width="2506" height="1264" alt="image" src="https://github.com/user-attachments/assets/8593c3e2-d537-48b3-8997-faacd380ffda" />
+<img width="2500" height="1267" alt="image" src="https://github.com/user-attachments/assets/8de76c66-afbc-472c-ba48-58a3527e623c" />
+
 
 
 ### Opportunities List
@@ -88,9 +92,11 @@ Each opportunity includes the following information:
 <img width="2496" height="1269" alt="opportunities list from adminstrator view screenshot" src="https://github.com/user-attachments/assets/d1d89f34-7cbb-44ab-8b20-b239dfb8aafd" />
 
 
-### Create Opportunity
-  Form used by authorized users to create new opportunities.
+### Create/Edit Opportunity
+  Form used by authorized users to create new opportunities or edit existing ones.
 <img width="2511" height="1263" alt="create opportunity form screenshot" src="https://github.com/user-attachments/assets/aab3fea2-de46-4a48-8145-73f86d547250" />
+<img width="2504" height="1269" alt="image" src="https://github.com/user-attachments/assets/6c3836f4-45fc-4913-89a1-13dd5b10e1c4" />
+
 
 
 ### Email List
